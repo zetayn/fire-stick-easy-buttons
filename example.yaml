@@ -1,0 +1,4 @@
+type: custom:fire-stick-easy-buttons
+title: Fire Stick Easy Buttons
+entity: media_player.your_fire_stick
+discover_apps: true

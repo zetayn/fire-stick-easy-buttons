@@ -1,0 +1,7 @@
+{
+  "name": "Fire Stick Easy Buttons",
+  "filename": "fire-stick-easy-buttons.js",
+  "content_in_root": true,
+  "render_readme": true,
+  "homeassistant": "2026.6.0"
+}

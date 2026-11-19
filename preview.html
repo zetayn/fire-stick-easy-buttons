@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fire Stick Easy Buttons preview</title>
+<style>body{background:#0d1220;max-width:920px;margin:30px auto;padding:16px;font-family:Arial,sans-serif;color:white}ha-card{display:block}#result{padding:16px}button{font:inherit}</style>
+<fire-stick-easy-buttons></fire-stick-easy-buttons><p id="result" role="status">Demo mode. Buttons display the command below.</p>
+<script src="fire-stick-easy-buttons.js"></script>
+<script>
+customElements.define('ha-icon',class extends HTMLElement{
+  connectedCallback(){const symbols={'mdi:home':'⌂','mdi:arrow-up-bold':'↑','mdi:arrow-down-bold':'↓','mdi:arrow-left-bold':'←','mdi:arrow-right-bold':'→','mdi:check-circle':'✓','mdi:arrow-u-left-top':'↶','mdi:rewind':'◀◀','mdi:fast-forward':'▶▶','mdi:menu':'☰','mdi:play-pause':'▶Ⅱ','mdi:power':'⏻','mdi:refresh':'↻','mdi:youtube':'▶','mdi:netflix':'N','mdi:castle':'♜','mdi:television-play':'▣'};this.textContent=symbols[this.getAttribute('icon')]||'▦';this.style.fontSize='26px'}
+});
+const card=document.querySelector('fire-stick-easy-buttons');
+window.demoCalls=[];
+card.setConfig({entity:'media_player.demo_fire_stick'});
+card.hass={
+ states:{'media_player.demo_fire_stick':{state:'playing',attributes:{friendly_name:'Demo Fire Stick',app_id:'com.amazon.firetv.youtube'}}},
+ async callWS(request){
+   window.demoCalls.push(request);
+   const command=request.service_data.command;
+   document.querySelector('#result').textContent=command;
+   const response=command.startsWith('cmd package')
+     ? 'com.amazon.firetv.youtube/.MainActivity\ncom.netflix.ninja/.MainActivity\ncom.disney.disneyplus/.MainActivity\ncom.hulu.plus/.MainActivity'
+     : '';
+   return {response:{'media_player.demo_fire_stick':{adb_response:response}}};
+ }
+};
+</script></html>
